@@ -28,7 +28,6 @@ public class UserInterface {
     }
 
     public void getRatesAsJasonNode(String ratesValuesFromApi) throws JsonProcessingException {
-        System.out.println("JSON as String = " + ratesValuesFromApi);
         jsonNode = objectMapper.readTree(ratesValuesFromApi);
     }
 
