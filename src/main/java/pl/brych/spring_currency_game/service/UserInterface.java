@@ -1,35 +1,27 @@
 package pl.brych.spring_currency_game.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+import pl.brych.spring_currency_game.model.ExchangeRates;
 
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
+@Service
 public class UserInterface {
 
     private RandomRate randomRate;
-    private ObjectMapper objectMapper;
-    private JsonNode jsonNode;
 
     public UserInterface() {
         randomRate = new RandomRate();
-        objectMapper = new ObjectMapper();
     }
 
-    public void showOptions(String ratesValuesFromApi) throws JsonProcessingException {
-        getRatesAsJasonNode(ratesValuesFromApi);
-        System.out.println("Base currency is " + jsonNode.get("base"));
+    public void showOptions(ExchangeRates ratesValuesFromApi) {
+
+        System.out.println("Base currency is " + ratesValuesFromApi.getBase());
         String randomRateName = randomRate.getRandomRate();
-        double valueOfRandomRateName = jsonNode.at("/rates/" + randomRateName).asDouble();
+        double valueOfRandomRateName = ratesValuesFromApi.getRates().get(randomRateName);
 //        Uncomment below to start cheat mode
-//        System.out.println("Value of currency " + valueOfRandomRateName);
+        System.out.println("Value of currency " + valueOfRandomRateName);
         compareUserInput(valueOfRandomRateName);
-    }
-
-    public void getRatesAsJasonNode(String ratesValuesFromApi) throws JsonProcessingException {
-        jsonNode = objectMapper.readTree(ratesValuesFromApi);
     }
 
     public void compareUserInput(double valueOfRandomRateName) {
@@ -40,8 +32,8 @@ public class UserInterface {
             do {
                 System.out.println("Write number ");
                 userAnswer = userInput.nextDouble();
-                double formatUserAnswer = (double)Math.round(userAnswer * 100d) / 100d;
-                double formatValueOfRandomRateName = (double)Math.round(valueOfRandomRateName * 100d) / 100d;
+                double formatUserAnswer = (double) Math.round(userAnswer * 100d) / 100d;
+                double formatValueOfRandomRateName = (double) Math.round(valueOfRandomRateName * 100d) / 100d;
                 isAnswerCorrect = compareAnswer(formatUserAnswer, formatValueOfRandomRateName);
             } while (!isAnswerCorrect);
             System.out.println("You win the game :)");
