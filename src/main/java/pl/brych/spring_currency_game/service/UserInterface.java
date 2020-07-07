@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -39,9 +40,11 @@ public class UserInterface {
             do {
                 System.out.println("Write number ");
                 userAnswer = userInput.nextDouble();
-                isAnswerCorrect = compareAnswer(userAnswer, valueOfRandomRateName);
+                double formatUserAnswer = (double)Math.round(userAnswer * 100d) / 100d;
+                double formatValueOfRandomRateName = (double)Math.round(valueOfRandomRateName * 100d) / 100d;
+                isAnswerCorrect = compareAnswer(formatUserAnswer, formatValueOfRandomRateName);
             } while (!isAnswerCorrect);
-            System.out.println("You win game :)");
+            System.out.println("You win the game :)");
         }
     }
 
