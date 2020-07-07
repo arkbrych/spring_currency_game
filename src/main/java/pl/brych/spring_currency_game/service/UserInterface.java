@@ -22,7 +22,8 @@ public class UserInterface {
         System.out.println("Base currency is " + jsonNode.get("base"));
         String randomRateName = randomRate.getRandomRate();
         double valueOfRandomRateName = jsonNode.at("/rates/" + randomRateName).asDouble();
-        System.out.println("Value of currency " + valueOfRandomRateName);
+//        Uncomment below to start cheat mode
+//        System.out.println("Value of currency " + valueOfRandomRateName);
         compareUserInput(valueOfRandomRateName);
     }
 
@@ -40,9 +41,8 @@ public class UserInterface {
                 System.out.println("Write number ");
                 userAnswer = userInput.nextDouble();
                 isAnswerCorrect = compareAnswer(userAnswer, valueOfRandomRateName);
-                System.out.println(isAnswerCorrect);
             } while (!isAnswerCorrect);
-            System.out.println("Im outside");
+            System.out.println("You win game :)");
         }
     }
 
